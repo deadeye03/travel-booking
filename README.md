@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tour Booking App
+
+A modern, tour booking application built with Next.js and React.
+
+## Features
+
+- You can experience beautifull UI for you Tour
+- Navigate All tours with details
+- Add, edit, and delete Tours
+- View a list of all tours events for the selected day
+- Export Invoice for a specific booking with in pdf
+- Responsive design for various screen sizes
+- Data persistence using localStorage
 
 ## Getting Started
 
