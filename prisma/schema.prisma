@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String
+  photo    String?
+  role     String?
+  password String
+  active   Boolean @default(true)
+
+  bookings bookings[]
+  tours    tours?     @relation(fields: [toursId], references: [id])
+  toursId  String?    @db.ObjectId
+
+  reviews reviews[]
+}
+
+model tours {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  name            String         @unique
+  duration        Int?
+  maxGroupSize    Int?
+  difficulty      String
+  ratingsAverage  Float?
+  ratingsQuantity Int?
+  price           Int?
+  summary         String?
+  description     String?
+  imageCover      String?
+  images          String[]       @default([])
+  createdAt       DateTime       @default(now())
+  startDates      DateTime[]     @default([])
+  startLocation   StartLocation?
+  userId          String?        @db.ObjectId
+  guides          users[]
+  bookings        bookings[]
+  reviews         reviews[]
+  Booking         Booking[]
+}
+
+type StartLocation {
+  type        String  @default("Point")
+  coordinates Float[]
+  address     String
+  description String
+}
+
+model bookings {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  users     users    @relation(fields: [userId], references: [id])
+  usersId   String   @db.ObjectId
+  toursId   String   @db.ObjectId
+  tours     tours    @relation(fields: [toursId], references: [id])
+  price     Int
+  paid      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Booking {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  toursId   String   @db.ObjectId
+  tours     tours    @relation(fields: [toursId], references: [id])
+  userName  String
+  price     Int
+  travelers Int
+  email     String
+  number    String
+  cretedAt  DateTime @default(now())
+}
+
+model reviews {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  user   String  @db.ObjectId
+  users  users   @relation(fields: [user], references: [id])
+  tour   String  @db.ObjectId
+  tours  tours   @relation(fields: [tour], references: [id])
+  review String?
+  rating Int
+}
