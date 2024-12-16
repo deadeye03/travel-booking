@@ -14,6 +14,32 @@ A modern, tour booking application built with Next.js and React.
 
 ## Getting Started
 
+## Technologies Used
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components
+
+
+## Prisma Setup
+
+- To setup prisma 
+
+```bash
+npx primsa
+
+npx primsa init
+
+```
+- After that in your .env define your database 
+
+```bash
+DATABASE_URL='YOUR DATABSE URL'
+
+```
+
 First, run the development server:
 
 ```bash
